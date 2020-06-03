@@ -33,10 +33,6 @@ class TestIntroProblems(TestCase):
         """
         TestCase.tearDown methods perform cleanup tasks after all test methods are run, e.g. removing unneeded
         files from the file system.
-
-        Note: usually a function requires some content to avoid a syntax error. But functions are objects!
-        This docstring will be stored as an attribute of the function's 'self'. The python compiler
-        considers storing a docstring as 'doing something', and therefore there is no syntax error.
         :return:
         """
         os.remove(self.multiline_output)
