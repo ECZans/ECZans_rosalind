@@ -80,7 +80,7 @@ class TestIntroProblems(TestCase):
 # contained in-scope after we import it. It also has a __name__ variable, containing the string 'os'.
 # If I imported a file called 'foo.py' as 'foo', that module's in-scope __name__ would be 'foo'.
 #
-# If the 'foo.py' script _also_ had the ability to be run from the command-line (contained "if __name__ == '__main__':",
+# If the 'foo.py' script _also_ was meant to be run from the command-line (contained "if __name__ == '__main__':",
 # and some tasks to do in case that 'if' statement evaluated to True), nothing following the 'if' in 'foo.py'
 # would be run on importing 'foo' here. That's thanks to this 'if' statement, and the variable __name__!
 #
