@@ -10,7 +10,6 @@ from unittest import main as run_unittests # Re-naming this bc 'main' is ambiguo
 # Anything with an '__init__.py' is considered a 'module' of the 'package' ECZans_rosalind. We use
 # dot notation to traverse objects and their sub-objects, and the importer treats packages as objects.
 from ECZans_rosalind.string_theory import intro_problems
-from ECZans_rosalind.string_theory.intro_problems import string_slice
 
 
 class TestIntroProblems(TestCase):
