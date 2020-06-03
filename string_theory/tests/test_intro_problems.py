@@ -9,6 +9,7 @@ from unittest import main as run_unittests # Re-naming this bc 'main' is ambiguo
 # Finally, we import our own code (in same order, package then object imports)
 # Anything with an '__init__.py' is considered a 'module' of the 'package' ECZans_rosalind. We use
 # dot notation to traverse objects and their sub-objects, and the importer treats packages as objects.
+from ECZans_rosalind.string_theory import intro_problems
 from ECZans_rosalind.string_theory.intro_problems import string_slice
 
 
@@ -23,17 +24,23 @@ class TestIntroProblems(TestCase):
         :return:
         """
         self.example_string = "HumptyDumptysatonawallHumptyDumptyhadagreatfallAlltheKingshorsesandalltheKingsmenCouldntputHumptyDumptyinhisplaceagain"
+        self.multiline_input = 'test_data/multiline.txt'
+        self.multiline_output = 'test_data/even_numbered_out.tmp'
+        intro_problems.even_numbered_lines(self.multiline_input, self.multiline_output)
+        with open(self.multiline_output) as even_out:
+            self.multiline_output_lines = even_out.readlines()
 
     def tearDown(self):
         """
-        TestCase.tearDown methods perform cleanup tasks after all test methods are run, e.g. removing supporting
-        files from the file system. No tear-down is needed at this time.
+        TestCase.tearDown methods perform cleanup tasks after all test methods are run, e.g. removing unneeded
+        files from the file system.
 
         Note: usually a function requires some content to avoid a syntax error. But functions are objects!
         This docstring will be stored as an attribute of the function's 'self'. The python compiler
         considers storing a docstring as 'doing something', and therefore there is no syntax error.
         :return:
         """
+        os.remove(self.multiline_output)
 
     def test_string_slice_01(self):
         """
@@ -44,7 +51,7 @@ class TestIntroProblems(TestCase):
         # You'll see 'arg' and 'kwarg' used a lot in documentation
         # Arguments for 'callable' objects (methods or functions, some classes) can be
         # 'positional' (args) or keyword (kwargs) - here is an example of 'arg' syntax
-        actual_substring = string_slice(self.example_string, (22, 27))
+        actual_substring = intro_problems.string_slice(self.example_string, (22, 27))
         # Bad things happen if these strings aren't equal
         self.assertEqual(expected_substring, actual_substring)
 
@@ -54,7 +61,7 @@ class TestIntroProblems(TestCase):
         """
         expected_substring = 'Dumpty'
         # Keyword argument syntax - any order is fine when every argument is assigned to a keyword
-        actual_substring = string_slice(indices=(97, 102), input_string=self.example_string)
+        actual_substring = intro_problems.string_slice(indices=(97, 102), input_string=self.example_string)
         self.assertEqual(expected_substring, actual_substring)
 
     def test_string_slice_03(self):
@@ -65,8 +72,70 @@ class TestIntroProblems(TestCase):
         expected_substring = 'HumptyDumptysat'
         # Mix of args and kwargs - args precede kwargs, but overall order must be
         # maintained when the two are mixed
-        actual_substring = string_slice(self.example_string, indices=(84, 102))
+        actual_substring = intro_problems.string_slice(self.example_string, indices=(84, 102))
         self.assertNotEqual(expected_substring, actual_substring)
+
+    def test_calc_hypotenuse_01(self):
+        """
+        Test that the correct value is returned
+        """
+        expected_value = 13
+        actual_value = intro_problems.calc_hypotenuse(2, 3)
+        self.assertEqual(expected_value, actual_value)
+
+    def test_calc_hypotenuse_02(self):
+        """
+        Test that the expected exception is raised if bad input is provided
+        """
+        with self.assertRaises(ValueError):
+            intro_problems.calc_hypotenuse(a=2, b=2000)
+
+    def test_even_numbered_lines_01(self):
+        """
+        Test that expected number of even-numbered lines are captured
+        """
+        expected_line_count = 4
+        actual_line_count = len(self.multiline_output_lines)
+        self.assertEqual(expected_line_count, actual_line_count)
+
+    def test_even_numbered_lines_02(self):
+        """
+        Test that 2nd line in even_numbered_lines output is what we expected
+        """
+        expected_line = 'He was not afraid to die, O brave Sir Robin'
+        # Strip method of str removes whitespace characters including carriage returns by default
+        actual_line = self.multiline_output_lines[1].strip()
+        self.assertEqual(expected_line, actual_line)
+
+    def test_dict_word_counter(self):
+        """
+        Test that output is correct
+        """
+        expected_output = {'dog': 1, 'cat': 2, 'ball': 3}
+
+        # Join n=value occurrences of dict keys together into one string
+        input_string = ''
+        for key, value in expected_output.items():
+            input_string += (key + ' ') * value
+
+        actual_output = intro_problems.dict_word_counter(input_string)
+
+        self.assertEqual(expected_output, actual_output)
+
+    def sum_odds_from_range_01(self):
+        """
+        Test that the sum value returned is correct
+        """
+        a, b = 2, 11
+        expected_sum = 3 + 5 + 7 + 9 + 11
+        actual_sum = intro_problems.sum_odds_from_range(a, b)
+        self.assertEqual(expected_sum, actual_sum)
+
+    def sum_odds_from_range_02(self):
+        """
+        Test that the expected exception is raised if bad input is given
+        """
+        # Suggest a change and write what should go here!
 
 
 # When this script is called, the interpreter will read this source file and 'initialize' (read & store) some objects
