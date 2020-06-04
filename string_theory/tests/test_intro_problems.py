@@ -111,7 +111,26 @@ class TestIntroProblems(TestCase):
         # Join n=value occurrences of dict keys together into one string
         input_string = ''
         for key, value in expected_output.items():
+            # Because this is followed by an operation ('*') this isn't considered a tuple - and we need the ()
+            # because python follows order of operations. Try to append  a tuple to a string, and say
+            # hello to TypeError. Many objects have public methods for adding to themselves in-place.
+            # Operations like '+=' call this method, but the work that's done is different for diff objects.
+            # Obv. this is straight up addition for numeric types, but for iterable types like strings and lists
+            # this is short hand for 'right-hand append'.
             input_string += (key + ' ') * value
+            # Now try appending a list to a list with e.g.:
+            # list1 = [1, 2]
+            # list1 += [3, 4] # or
+            # list1.append([3, 4])
+            # and a tuple:
+            # tuple1 = (1, 2)
+            # tuple += [3, 4]
+            # This doesn't work, not because we're mixing types (in this case - try adding a list to a string)
+            # but because tuples are immutable. We can add a tuple to a list just fine
+            # list1 += (3, 4)
+            # list1.append(tuple([5, 6]))
+            # Or join two tuples together to create a new tuple
+            # tuple2 = tuple1 + (3, 4)
 
         actual_output = intro_problems.dict_word_counter(input_string)
 
