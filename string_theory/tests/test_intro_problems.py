@@ -125,8 +125,8 @@ class TestIntroProblems(TestCase):
             # and a tuple:
             # tuple1 = (1, 2)
             # tuple += [3, 4]
-            # This doesn't work, not because we're mixing types (in this case - try adding a list to a string)
-            # but because tuples are immutable. We can add a tuple to a list just fine
+            # This doesn't work, not because we're mixing types (in this case) but because tuples are immutable.
+            # We can add a tuple to a list just fine
             # list1 += (3, 4)
             # list1.append(tuple([5, 6]))
             # Or join two tuples together to create a new tuple
