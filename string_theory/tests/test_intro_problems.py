@@ -111,7 +111,7 @@ class TestIntroProblems(TestCase):
         # Join n=value occurrences of dict keys together into one string
         input_string = ''
         for key, value in expected_output.items():
-            # Because this is followed by an operation ('*') this isn't considered a tuple - and we need the ()
+            # Because this contains operations ('*', '+') this isn't considered a tuple - and we need the ()
             # because python follows order of operations. Try to append  a tuple to a string, and say
             # hello to TypeError. Many objects have public methods for adding to themselves in-place.
             # Operations like '+=' call this method, but the work that's done is different for diff objects.
@@ -131,6 +131,7 @@ class TestIntroProblems(TestCase):
             # list1.append(tuple([5, 6]))
             # Or join two tuples together to create a new tuple
             # tuple2 = tuple1 + (3, 4)
+            # Now say tuple three times fast.
 
         actual_output = intro_problems.dict_word_counter(input_string)
 
