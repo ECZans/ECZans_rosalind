@@ -137,7 +137,7 @@ def sum_odds_from_range(a, b):
     # by doing list comprehension inside () we're actually creating a generator.
 
     # Generators dynamically return an object from a series when the 'next' method is called
-    # (by for-loop i.e. for <x> in <generator>, by dot-notation access to a generator object's '__next__'
+    # (by for-loop i.e. for <x> in <generator>, by dot-notation call to a generator object's '__next__'
     # method, or by calling next(<generator name>). For large objects (e.g. a giant fastq file) this significantly
     # reduces up-front memory costs because a generator isn't storing an entire file's worth of strings.
     # A file handle returned by open(<filename>) is a generator! Iterating over a filehandle with 'for' calls the
@@ -156,4 +156,7 @@ def sum_odds_from_range(a, b):
 
 if __name__ == '__main__':
     # Implementing a command-line argument parser is on to-do list
-    print(string_slice(input_string=sys.argv[1], indices=sys.argv[2]))
+    # usage in this case, to run and print the result of only the string_slice method (since that's
+    # all that's in this to-do block):
+    # python intro_problems.py 'myinputstring' 2 5
+    print(string_slice(input_string=sys.argv[1], indices=[sys.argv[2], sys.argv[3]]))
