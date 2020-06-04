@@ -118,6 +118,12 @@ class TestIntroProblems(TestCase):
             # Obv. this is straight up addition for numeric types, but for iterable types like strings and lists
             # this is short hand for 'right-hand append'.
             input_string += (key + ' ') * value
+            # Fyi this operation returns a string-type object:
+            # (key + ' ')
+            # this returns a list-type:
+            # [key + ' ']
+            # and this _does_ return a tuple:
+            # (key + ' ',)
             # Now try appending a list to a list with e.g.:
             # list1 = [1, 2]
             # list1 += [3, 4] # or
