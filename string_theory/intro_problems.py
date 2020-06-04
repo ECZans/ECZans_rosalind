@@ -36,6 +36,8 @@ def even_numbered_lines(input_file, output_file, append=False):
     Read in an input file and write/append even-numbered lines to the specified
     output file
 
+    :param output_file:
+    :param append:
     :param str input_file: Path to input text file
     """
     # By using 'with' we create a temporary filehandle that'll automatically close as soon
@@ -61,8 +63,8 @@ def even_numbered_lines(input_file, output_file, append=False):
 
 def dict_word_counter(input_string):
     """
-    Count ocurrences of words in a string < 10000 characters manually by indexing a 'dict' results
-    object and adding to values
+    Count ocurrences of words in a string < 10000 characters exhaustively by iteratively adding to
+    counters stored as dict values
     :param input_string:
     :return:
     """
@@ -82,6 +84,14 @@ def dict_word_counter(input_string):
         else:
             output_dict[word] += 1
 
+    # I said 'exhaustively' in docstring because we can save 4 lines of code (okay, not that exhaustive)
+    # by using Counter (or defaultdict) objects from the 'collections' package (which you can install by running
+    # 'pip install collections' on command-line) as an alternative to builtin dict. They come with snazzy
+    # convenience methods like Counter's most_common. I mean, look at this beautiful thing.
+    # Collections changed a fair bit from python2 -> python3, though, which can be a hassle, and there's nothing
+    # wrong with sticking with builtins.
+    # word_counter = collections.Counter([list_of_words])
+
     return output_dict
 
 
@@ -95,6 +105,9 @@ def sum_odds_from_range(a, b):
     # Do no work if input is not a < b < 10000
     if not a < b < 10000:
         raise ValueError('Expected a < b < 10000 but got a={}, b={}'.format(a, b))
+    # Do no work if a or b is negative
+    if a < 0 or b < 0:
+        raise ValueError('Expected positive integers but got a={}, b={}'.format(a, b))
 
     # Many strategies are possible, 4 described below.
 
@@ -103,12 +116,19 @@ def sum_odds_from_range(a, b):
     # Here is an 'exhaustive' option - while loop with counter
     # sum = 0
     # while a <= b:
+    #   if a % 2 == 1:
+    #       sum += a
+    #   a += 1
+
+    # Note: had this -
+    # while a <= b:
     #   a += 1
     #   if a % 2 == 1:
     #       sum += a
+    # previously. What's wrong with with this version?
 
     # Here is an example of list comprehension with modulo. List comprehension is
-    # faster than a for loop in some scenarios (but slower in others). This iterates
+    # faster than a for loop in some scenarios (but slower in others). This iterates over
     # an iterable (or generator, in this case) object much like a for-loop, but builds a list
     # dynamically as it goes. Note that range() returns a generator - more on that below.
     # odd_numbers = [num for num in range(a, b) if num % 2 == 1]
@@ -120,19 +140,20 @@ def sum_odds_from_range(a, b):
     # (by for-loop i.e. for <x> in <generator>, by dot-notation access to a generator object's '__next__'
     # method, or by calling next(<generator name>). For large objects (e.g. a giant fastq file) this significantly
     # reduces up-front memory costs because a generator isn't storing an entire file's worth of strings.
-    # A file handle returned by open(<filename>) is a generator! The readline method calls __next__ and
-    # returns the result.
+    # A file handle returned by open(<filename>) is a generator! Iterating over a filehandle with 'for' calls the
+    # __next__ method of the filehandle and returns the result (the next line in the file).
     #
     # The downside is that most generators are exhaustible - once an item in the series is accessed, the
-    # generator advances and that item can't be recovered. There are workarounds, however.
+    # generator advances and that item can't be recovered. And if you try to advance beyond the end of a
+    # series in a generator (i.e. by exhausting it with a 'for' loop and _then_ calling next,
+    # you'll catch a StopIteration exception (unpleasant surprise if you've just parsed a massive file)
+    # There are workarounds, however.
     odd_numbers = (num for num in range(a, b) if num % 2 == 1)
 
     # Note that we can sum a generator of numeric objects (float and/or int), since generators are iterable.
     return sum(odd_numbers)
 
 
-
-
 if __name__ == '__main__':
-    # Implementing a commandline argument parser is on to-do list
+    # Implementing a command-line argument parser is on to-do list
     print(string_slice(input_string=sys.argv[1], indices=sys.argv[2]))

@@ -1,6 +1,6 @@
 """Unit test examples"""
 # Good import practices as follows:
-# Imports of builtin packages come first - this example is unused
+# Imports of builtin packages come first
 import os
 # Sub-imports of builtins follow - our interpreter will be aware of the 'TestCase' class and 'main' method from
 # unittest, but nothing else. Nothing wrong with just importing 'unittest' instead
