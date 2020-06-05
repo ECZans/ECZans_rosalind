@@ -85,12 +85,12 @@ def dict_word_counter(input_string):
             output_dict[word] += 1
 
     # I said 'exhaustively' in docstring because we can save 4 lines of code (okay, not that exhaustive)
-    # by using Counter (or defaultdict) objects from the 'collections' package (which you can install by running
-    # 'pip install collections' on command-line) as an alternative to builtin dict. They come with snazzy
-    # convenience methods like Counter's most_common. I mean, look at this beautiful thing.
-    # Collections changed a fair bit from python2 -> python3, though, which can be a hassle, and there's nothing
-    # wrong with sticking with builtins.
+    # by using defaultdict (or Counter) objects from the 'collections' package (which you can install by running
+    # 'pip install collections' on command-line) as an alternative to builtin dict.
     # word_counter = collections.Counter([list_of_words])
+    # additive_dict = defaultdict(int)
+    # for word in list_of_words:
+    #   additive_dict[word] += 1
 
     return output_dict
 
@@ -119,13 +119,6 @@ def sum_odds_from_range(a, b):
     #   if a % 2 == 1:
     #       sum += a
     #   a += 1
-
-    # Note: had this -
-    # while a <= b:
-    #   a += 1
-    #   if a % 2 == 1:
-    #       sum += a
-    # previously. What's wrong with with this version?
 
     # Here is an example of list comprehension with modulo. List comprehension is
     # faster than a for loop in some scenarios (but slower in others). This iterates over
