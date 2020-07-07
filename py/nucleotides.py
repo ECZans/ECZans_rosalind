@@ -80,10 +80,11 @@ def percent_gc(fasta_file, ndec=5):
 
 def reverse_palindrome(s, n_char):
     """
-    Exhaustive solution for location of reverse palindromes of len n_char in DNA sequence s
+    Collect the start 1-based start sites of reverse palindromes of
+    len n_char in DNA sequence s
 
-    :param s: 
-    :param n_char: 
+    :param str s: DNA sequence
+    :param int n_char: Palindrome length
     :return: 
     """
     start_sites = []
@@ -104,4 +105,5 @@ def consensus_and_profile(fasta_file, output=sys.stdout):
     :param str fasta_file: Path to fasta file
     :param str or io output:
     """
+    # TODO
     fasta_sequences = [elem[1] for elem in common.iter_fasta(fasta_file)]
