@@ -1,4 +1,5 @@
 """Sequence structure and motif methods"""
+import ECZ_ROSALIND.py.nucleotides as nuc
 
 
 def pattern_matching():
@@ -65,20 +66,41 @@ def disjointed_gene_motifs():
     """
 
 
-def restriction_sites():
+def restriction_sites(s, p_min=4, p_max=12):
     """
     (REVP) Locating Restriction Sites
 
-    :return:
+    Print the 1-based start sites and subsequence length for all reverse palindromes
+    of length p_min <= len <= p_max in DNA sequence s
+
+    :param str s: DNA sequence
+    :param int p_min: Minimum reportable palindrome length
+    :param int p_max: Maximum reportable palindrome length
     """
+    restrict_starts = []
+    for k in range(p_min, p_max + 1):
+        for i in nuc.reverse_palindrome(s, k):
+            restrict_starts.append('{} {}'.format(i, k))
+    print('\n'.join(restrict_starts))
 
 
-def dna_motif():
+def dna_motif(s, t):
     """
     (SUBS) Finding a Motif in DNA
 
-    :return:
+    Find all 1-based start positions of substring t in DNA nucleotide sequence s
+
+    :param str s: DNA sequence to query
+    :param str t: DNA subsequence to search for
+    :return str: 1-based start locations of t in s as space-delimited list
     """
+    motif_starts, s, t = [], s.upper(), t.upper()
+    # Position of first match
+    idx = s.find(t)
+    while idx != -1:
+        motif_starts.append(str(idx + 1))
+        idx = s.find(t, idx + 1)
+    return ' '.join(motif_starts)
 
 
 def rna_splicing():
@@ -119,6 +141,12 @@ def rna_maximum_structure():
 
     :return:
     """
+
+
+
+
+
+
 
 
 
